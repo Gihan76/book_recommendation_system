@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react";
 import axiosInstance from "../../api/axiosInstance";
 import AuthContext from "../../context/AuthContext";
-import { LOGIN_ENDPOINT } from "../../config/constants";
-import { useNavigate } from "react-router-dom";
+import { DASHBOARD, LOGIN_ENDPOINT, SIGNUP } from "../../config/constants";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
     const { user, login } = useContext(AuthContext);
@@ -14,7 +14,7 @@ const Login = () => {
 
     // check whether user is already logged in when navigate to login page
     if (user?.loggedIn) {
-        navigate('/dashboard'); ////////////
+        navigate(DASHBOARD);
         return null;
     }
 
@@ -44,11 +44,41 @@ const Login = () => {
     };
 
     return(
-        <form onSubmit={handleLogin}>
-            <input type="email" placeholder="Email" value={formData.email} onChange={handleEmail} />
-            <input type="password" placeholder="Password" value={formData.password} onChange={handlePassword} />
-            <button type="submit">Login</button>
-        </form>
+        <div className="container mt-5">
+            <div className="row justify-content-center">
+                <div className="col-md-4">
+                    <h2 className="text-center mb-4">Login</h2>
+                    <form onSubmit={handleLogin}>
+                        <div className="mb-3">
+                            <label htmlFor="email" className="form-label">Email address</label>
+                            <input
+                                type="email"
+                                className="form-control"
+                                id="email"
+                                value={formData.email}
+                                onChange={handleEmail}
+                                required
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="password" className="form-label">Password</label>
+                            <input
+                                type="password"
+                                className="form-control"
+                                id="password"
+                                value={formData.password}
+                                onChange={handlePassword}
+                                required
+                            />
+                        </div>
+                        <div className="d-flex justify-content-between align-items-center">
+                            <button type="submit" className="btn btn-primary">Login</button>
+                            <Link to={SIGNUP} className="text-decoration-none">Don't have an account? Sign Up</Link>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     );
 };
 

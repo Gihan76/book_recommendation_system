@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axiosInstance from "../../api/axiosInstance";
-import { SIGNUP_ENDPOINT } from "../../config/constants";
+import { LOGIN, SIGNUP_ENDPOINT } from "../../config/constants";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
     const [formData, setFormData] = useState({
@@ -41,13 +42,53 @@ const SignUp = () => {
         }
     }
 
-    return(
-        <form onSubmit={handleSignUp}>
-            <input type="text" placeholder="Username" value={formData.username} onChange={handleUsername} />
-            <input type="email" placeholder="Email" value={formData.email} onChange={handleEmail} />
-            <input type="password" placeholder="Password" value={formData.password} onChange={handlePassword} />
-            <button type="submit">Sign Up</button>
-        </form>
+    return (
+        <div className="container mt-5">
+            <div className="row justify-content-center">
+                <div className="col-md-4">
+                    <h2 className="text-center mb-4">Sign Up</h2>
+                    <form onSubmit={handleSignUp}>
+                        <div className="mb-3">
+                            <label htmlFor="username" className="form-label">Username</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="username"
+                                value={formData.username}
+                                onChange={handleUsername}
+                                required
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="email" className="form-label">Email address</label>
+                            <input
+                                type="email"
+                                className="form-control"
+                                id="email"
+                                value={formData.email}
+                                onChange={handleEmail}
+                                required
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="password" className="form-label">Password</label>
+                            <input
+                                type="password"
+                                className="form-control"
+                                id="password"
+                                value={formData.password}
+                                onChange={handlePassword}
+                                required
+                            />
+                        </div>
+                        <div className="d-flex justify-content-between align-items-center">
+                            <button type="submit" className="btn btn-primary">Sign Up</button>
+                            <Link to={LOGIN} className="text-decoration-none">Already have an account? Login</Link>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     );
 };
 
