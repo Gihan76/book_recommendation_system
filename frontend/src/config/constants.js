@@ -1,3 +1,9 @@
 // backend routes
-export const login_backend = '/auth/login';
-export const sign_up_backend = '/auth/signup';
+export const LOGIN_ENDPOINT = '/auth/login';
+export const SIGNUP_ENDPOINT = '/auth/signup';
+
+// frontend routes
+export const ROOT = '/';
+export const LOGIN = '/login';
+export const SIGNUP = '/signup';
+export const DASHBOARD = '/dashboard';

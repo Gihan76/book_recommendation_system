@@ -1,17 +1,24 @@
 import React, { useState, useContext } from "react";
 import axiosInstance from "../../api/axiosInstance";
 import AuthContext from "../../context/AuthContext";
-import { login_backend } from "../../config/constants";
+import { LOGIN_ENDPOINT } from "../../config/constants";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-    const { login } = useContext(AuthContext);
+    const { user, login } = useContext(AuthContext);
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         email: '',
         password: '',
     });
 
+    // check whether user is already logged in when navigate to login page
+    if (user?.loggedIn) {
+        navigate('/dashboard'); ////////////
+        return null;
+    }
+
     const handleEmail = (e) => {
-        // console.log("🚀 ~ handleEmail ~ e:", e.target.value)
         setFormData({
             ...formData,
             email: e.target.value,
@@ -19,7 +26,6 @@ const Login = () => {
     }
 
     const handlePassword = (e) => {
-        // console.log("🚀 ~ handlePassword ~ e:", e.target.value)
         setFormData({
             ...formData,
             password: e.target.value,
@@ -29,7 +35,7 @@ const Login = () => {
     const handleLogin = async(e) => {
         e.preventDefault();
         try {
-            const { data } = await axiosInstance.post(login_backend, formData);
+            const { data } = await axiosInstance.post(LOGIN_ENDPOINT, formData);
             login(data?.token);
         } catch (error) {
             console.log("🚀 ~ handleLogin ~ error:", error)

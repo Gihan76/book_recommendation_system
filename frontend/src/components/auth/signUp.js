@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axiosInstance from "../../api/axiosInstance";
-import { sign_up_backend } from "../../config/constants";
+import { SIGNUP_ENDPOINT } from "../../config/constants";
 
 const SignUp = () => {
     const [formData, setFormData] = useState({
@@ -10,7 +10,6 @@ const SignUp = () => {
     });
 
     const handleUsername = (e) => {
-        // console.log("🚀 ~ handleUsername ~ e:", e.target.value)
         setFormData({
             ...formData,
             username: e.target.value,
@@ -18,7 +17,6 @@ const SignUp = () => {
     };
 
     const handleEmail = (e) => {
-        // console.log("🚀 ~ handleEmail ~ e:", e.target.value)
         setFormData({
             ...formData,
             email: e.target.value,
@@ -26,7 +24,6 @@ const SignUp = () => {
     }
 
     const handlePassword = (e) => {
-        // console.log("🚀 ~ handlePassword ~ e:", e.target.value)
         setFormData({
             ...formData,
             password: e.target.value,
@@ -36,7 +33,7 @@ const SignUp = () => {
     const handleSignUp = async (e) => {
         e.preventDefault();
         try {
-            await axiosInstance.post(sign_up_backend, formData);
+            await axiosInstance.post(SIGNUP_ENDPOINT, formData);
             alert('Sign Up successful! you can now log in');
         } catch (error) {
             console.log("🚀 ~ handleSignUp ~ error:", error)
