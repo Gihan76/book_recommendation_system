@@ -1,9 +1,11 @@
 import { useState } from "react";
 import axiosInstance from "../../api/axiosInstance";
 import { LOGIN, SIGNUP_ENDPOINT } from "../../config/constants";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         email: "",
         username: "",
@@ -35,10 +37,15 @@ const SignUp = () => {
         e.preventDefault();
         try {
             await axiosInstance.post(SIGNUP_ENDPOINT, formData);
-            alert('Sign Up successful! you can now log in');
+            navigate(LOGIN);
+            toast.success('Sign Up successful! you can now log in', {
+                toastId: 'signUpSuccess'
+            });
         } catch (error) {
             console.log("🚀 ~ handleSignUp ~ error:", error)
-            alert(error.response?.data?.error || 'Sign Up failed!');
+            toast.error(error.response?.data?.error || 'Sign Up failed!', {
+                toastId: 'signUpFailed'
+            });
         }
     }
 

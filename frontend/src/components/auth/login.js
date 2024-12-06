@@ -3,6 +3,7 @@ import axiosInstance from "../../api/axiosInstance";
 import AuthContext from "../../context/AuthContext";
 import { DASHBOARD, LOGIN_ENDPOINT, SIGNUP } from "../../config/constants";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
     const { user, login } = useContext(AuthContext);
@@ -37,9 +38,14 @@ const Login = () => {
         try {
             const { data } = await axiosInstance.post(LOGIN_ENDPOINT, formData);
             login(data?.token);
+            toast.success('Login successful! Redirecting to the dashboard...', {
+                toastId: 'loginSuccess'
+            });
         } catch (error) {
             console.log("🚀 ~ handleLogin ~ error:", error)
-            alert(error?.response?.data?.error || 'Login failed!');
+            toast.error(error?.response?.data?.error || 'Login failed!', {
+                toastId: 'loginFailed'
+            });
         }
     };
 
