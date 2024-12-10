@@ -9,6 +9,7 @@ import { NavigateBasedOnAuth } from "./components/NavigateBasedOnAuth";
 import { DASHBOARD, LOGIN, ROOT, SIGNUP } from "./config/constants";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { BookProvider } from "./context/BookContext";
 
 const App = () => (
   <Router>
@@ -34,7 +35,15 @@ const App = () => (
         <Route path={SIGNUP} element={<SignUpPage />} />
 
         {/* protected routes */}
-        <Route path={DASHBOARD} element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
+        <Route
+          path={DASHBOARD}
+          element={
+            <ProtectedRoute>
+              <BookProvider>
+                <DashboardPage />
+              </BookProvider>
+            </ProtectedRoute>
+          } />
       </Routes>
     </AuthProvider>
   </Router>

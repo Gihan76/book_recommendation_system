@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes.js';
+import bookRoutes from './routes/bookRoutes.js';
 
 dotenv.config();
 const app = express();
@@ -16,6 +17,7 @@ connectToDB();
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/books', bookRoutes);
 
 app.listen(process.env.PORT, () => {
     console.log(`Backend server listening at port ${PORT}`);
